@@ -41,6 +41,11 @@ const puppeteer = require('puppeteer');
     });
   });
   const submitElement = await page.$('[value="Add Classes to Schedule"]');
+  /*
+  page.on('dialog', async dialog => {
+    await dialog.accept();
+  });
+  */ 
   await submitElement.click();
   //console.log('tr elements with align="center" containing a checkbox:', trElementsWithCheckbox);
   // Close the browser
