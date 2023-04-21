@@ -13,13 +13,6 @@ const puppeteer = require('puppeteer');
   const page = await browser.newPage();
   // row-label push-label 
   // Navigate to Boston University login page
-  /*
-  await page.setCookie({
-    name: cookie_name, 
-    value: cookie_session,
-    domain: 'https://www.bu.edu/'
-  });
-  */
   await page.goto('https://student.bu.edu');
   await page.waitForNavigation({ waitUntil: 'networkidle0' }),
   await login(page, email, password);
