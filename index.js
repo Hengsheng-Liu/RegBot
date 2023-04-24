@@ -19,7 +19,7 @@ const credentials = loadCredentials();
   await signUp(page);
 })();
 function loadCredentials() {
-  const data = fs.readFileSync('secrets.json', 'utf8');
+  const data = fs.readFileSync('profile.json', 'utf8');
   return JSON.parse(data);
 }
 function getCurrentTimestamp() {
@@ -27,20 +27,6 @@ function getCurrentTimestamp() {
   const date = now.toLocaleDateString();
   const time = now.toLocaleTimeString();
   return date + ' ' + time;
-}
-function printClass(td){
-  const class_code = tdArray[2].textContent.trim();
-  const seat = tdArray[5].textContent.trim();
-  const class_with_professor = tdArray[3].innerText;
-  const [class_name, class_professor] = class_with_professor.split("\n");
-  const class_type = tdArray[7].textContent.trim();
-  const class_building = tdArray[8].textContent.trim();
-  const class_room = tdArray[9].textContent.trim();
-  const class_date = tdArray[10].textContent.trim();
-  const class_start_time = tdArray[11].textContent.trim();
-  const class_end_time = tdArray[12].textContent.trim();
-  console.log("Class: " + class_code + " " + class_name + " " + class_type + " " + class_professor
-    + " " + class_date + " " + class_building + " " + class_room + " " + class_start_time + " " + class_end_time + " " + seat + " seats open" + "at " + getCurrentTimestamp());
 }
 async function login(page, email, password) {
   page.waitForNavigation(),
@@ -72,6 +58,20 @@ async function signUpOnce(page) {
     return;
   }
   await page.$$eval('tr[align="center"]', (trElements) => {
+    function printClass(tdArray){
+      const class_code = tdArray[2].textContent.trim();
+      const seat = tdArray[5].textContent.trim();
+      const class_with_professor = tdArray[3].innerText;
+      const [class_name, class_professor] = class_with_professor.split("\n");
+      const class_type = tdArray[7].textContent.trim();
+      const class_building = tdArray[8].textContent.trim();
+      const class_room = tdArray[9].textContent.trim();
+      const class_date = tdArray[10].textContent.trim();
+      const class_start_time = tdArray[11].textContent.trim();
+      const class_end_time = tdArray[12].textContent.trim();
+      console.log("Class: " + class_code + " " + class_name + " " + class_type + " " + class_professor
+        + " " + class_date + " " + class_building + " " + class_room + " " + class_start_time + " " + class_end_time + " " + seat + " seats open" + "at ");
+    }
     const trArray = [];
     trElements.forEach((trElement) => {
       trArray.push(trElement);
@@ -84,7 +84,7 @@ async function signUpOnce(page) {
         printClass(tdArray);
       }
     });;
-  },printClass);
+  });
   ;
   const submitElement = await page.$('[value="Add Classes to Schedule"]');
   await submitElement.click();
