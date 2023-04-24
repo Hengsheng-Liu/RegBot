@@ -88,11 +88,9 @@ async function signUpOnce(page) {
   ;
   const submitElement = await page.$('[value="Add Classes to Schedule"]');
   await submitElement.click();
-  /*
   page.on('dialog', async dialog => {
     await dialog.accept();
   });
-  */
 }
 
 async function signUp(page) {
